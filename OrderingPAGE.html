@@ -1,0 +1,480 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Ordering System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f9f9f9;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 97.4%;
+            padding: 15px 20px;
+            background-color: #ff5e57;
+            color: white;
+            font-size: 1.5em;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+        }
+        .header .title {
+            flex: 1;
+            text-align: left;
+            margin-left: 10px;
+        }
+        .header .cart-icon,
+        .header .logout-btn {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1em; 
+            color: #fff;
+            background-color: #e04e4a;
+            padding: 6px 12px; 
+            border-radius: 20px;
+            transition: background-color 0.3s;
+        }
+        .header .cart-icon:hover,
+        .header .logout-btn:hover {
+            background-color: #ff4742;
+        }
+        .cart-count {
+            background-color: #ffffff;
+            color: #ff5e57;
+            border-radius: 50%;
+            padding: 3px 8px;
+            font-size: 0.8em;
+            margin-right: 5px;
+        }
+        .container {
+            display: flex;
+            width: 80%;
+            margin-top: 20px;
+        }
+        .categories {
+            width: 20%;
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 8px;
+            margin-right: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .categories h3 {
+            color: #ff5e57;
+            margin-top: 0;
+        }
+        .categories ul {
+            list-style: none;
+            padding: 0;
+        }
+        .categories ul li {
+            margin: 8px 0;
+            cursor: pointer;
+            color: #333;
+        }
+        .categories ul li:hover {
+            color: #ff5e57;
+        }
+        .menu {
+            width: 75%;
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .menu-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+        .item-info {
+            display: flex;
+            align-items: center;
+        }
+        .item-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+        }
+        .item-text {
+            display: flex;
+            flex-direction: column;
+            font-size: 0.9em;
+        }
+        .item-text h4 {
+            font-size: 1.2em;
+            margin: 0;
+        }
+        .add-btn {
+            background-color: #ff5e57;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            width: 400px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-height: 80vh; /* Limit modal height */
+            overflow-y: auto; /* Enable scroll */
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+        .cart-items {
+            margin-top: 20px;
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .total {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 10px;
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+        }
+        .discount-checkbox {
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .checkout-btn,
+        .close-btn {
+            width: 48%;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .checkout-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .close-btn {
+            background-color: #f44336;
+            color: white;
+        }
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .modal-content label {
+            font-weight: bold;
+            font-size: 14px;
+            color: #333;
+            display: block;
+            margin-bottom: 5px;
+        }
+        button[onclick="applyPromoCode()"] {
+            background-color: #ff5e57;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        button[onclick="applyPromoCode()"]:hover {
+            background-color: #ff4742;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="title">Food Ordering System</div>
+        <div class="cart-icon" onclick="openCartModal()">
+            <i class="fas fa-shopping-cart"></i> Cart <span class="cart-count" id="cart-count">0</span>
+        </div>
+        <div class="logout-btn" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i> Log Out
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="categories">
+            <h3>Categories</h3>
+            <ul>
+                <li onclick="showCategory('all')">All Categories</li>
+                <li onclick="showCategory('appetizers')">Appetizers</li>
+                <li onclick="showCategory('main course')">Main Course</li>
+                <li onclick="showCategory('pasta')">Pasta</li>
+                <li onclick="showCategory('desserts')">Desserts</li>
+                <li onclick="showCategory('drinks')">Drinks</li>
+            </ul>
+        </div>
+
+        <div class="menu" id="menu">
+            <!-- Menu Items -->
+        </div>
+    </div>
+
+    <div class="modal" id="cart-modal">
+        <div class="modal-content">
+            <h3>Order Summary</h3>
+            <div class="order-summary-items">
+                <!-- Customer Details Input Fields -->
+                <div style="margin-bottom: 20px; text-align: left;">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="Enter Name" class="input-field" required>
+                </div>
+                <div style="margin-bottom: 20px; text-align: left;">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" placeholder="Enter Address" class="input-field" required>
+                </div>
+                <div style="margin-bottom: 20px; text-align: left;">
+                    <label for="contact">Contact Number</label>
+                    <input type="text" id="contact" placeholder="Enter Contact Number" class="input-field" required>
+                </div>
+
+                <!-- Promo Code Field -->
+                <div style="margin-bottom: 50px; text-align: left;">
+                    <label for="promo-code">Promo Code</label>
+                    <input type="text" id="promo-code" placeholder="Enter Promo Code" class="input-field">
+                    <button onclick="applyPromoCode()">Apply Code</button>
+                </div>
+
+                <!-- Senior Citizen Discount Checkbox -->
+                <div class="discount-checkbox">
+                    <input type="checkbox" id="discount-checkbox" onchange="updateCartDisplay()">
+                    <label for="discount-checkbox">Apply Senior/PWD Discount (20%)</label>
+                </div>
+                <div id="id-number-field" style="display: none; margin-top: 10px;">
+                    <label for="id-number">Senior/PWD ID Number</label>
+                    <input type="text" id="id-number" placeholder="Enter ID Number" class="input-field">
+                </div>
+
+                <!-- Cart Items and Total Amount -->
+                <div class="cart-items" id="cart-items"></div>
+                <div class="total">
+                    <span>Subtotal</span>
+                    <span id="total-amount">₱0.00</span>
+                </div>
+                <div class="total">
+                    <span>Tax (12%)</span>
+                    <span id="tax-amount">₱0.00</span>
+                </div>
+                <div class="total">
+                    <span>Total</span>
+                    <span id="final-total">₱0.00</span>
+                </div>
+
+                <!-- Checkout and Close Buttons -->
+                <div class="buttons">
+                    <button class="checkout-btn" onclick="checkout()">Checkout</button>
+                    <button class="close-btn" onclick="closeCartModal()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let cart = [];
+        let allProducts = [];
+        let promoCodeDiscount = 0;
+
+        function fetchProducts() {
+            fetch('http://localhost:3001/get-products')
+                .then(response => response.json())
+                .then(products => {
+                    allProducts = products.reverse();
+                    showCategory('all');
+                })
+                .catch(error => console.error('Error fetching products:', error));
+        }
+
+        function showCategory(category) {
+            const menuContainer = document.getElementById("menu");
+            menuContainer.innerHTML = '';
+
+            let filteredProducts = category === 'all' ? allProducts : allProducts.filter(product => product.ProductCategory.toLowerCase() === category.toLowerCase());
+
+            filteredProducts.forEach(product => {
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('menu-item');
+                productDiv.innerHTML = `
+                    <div class="item-info">
+                        <img src="http://localhost:3001${product.productImage}" alt="${product.ProductName}" class="item-image" />
+                        <div class="item-text">
+                            <h4>${product.ProductName}</h4>
+                            <p>₱${product.ProductPrice}</p>
+                        </div>
+                    </div>
+                    <button class="add-btn" onclick="addToCart('${product.ProductName}', ${product.ProductPrice})">+</button>
+                `;
+                menuContainer.appendChild(productDiv);
+            });
+        }
+
+        function openCartModal() {
+            document.getElementById("cart-modal").style.display = "flex";
+            updateCartDisplay();
+        }
+
+        function closeCartModal() {
+            document.getElementById("cart-modal").style.display = "none";
+        }
+
+        function addToCart(name, price) {
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity += 1;
+                if (existingItem.quantity === 2) {
+                    alert(`You have added 2 or more of ${name}. You get a discount of ₱10!`);
+                }
+            } else {
+                cart.push({ name, price, quantity: 1 });
+            }
+            document.getElementById("cart-count").innerText = cart.length;
+            alert(`${name} added to cart at ₱${price}!`);
+            updateCartDisplay();
+        }
+
+        function applyPromoCode() {
+            const promoCode = document.getElementById("promo-code").value.trim().toUpperCase();
+            if (promoCode === "WELCOME") {
+                promoCodeDiscount = 10;
+                alert("Congratulations! You've received a ₱10 discount.");
+            } else {
+                promoCodeDiscount = 0;
+                alert("Invalid promo code.");
+            }
+            updateCartDisplay();
+        }
+
+        function updateCartDisplay() {
+            const cartItemsContainer = document.getElementById("cart-items");
+            cartItemsContainer.innerHTML = "";
+            let subtotal = 0;
+
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+
+                const cartItem = document.createElement("div");
+                cartItem.classList.add("cart-item");
+                cartItem.innerHTML = `
+                    <span>${item.name} (x${item.quantity}) - ₱${itemTotal.toFixed(2)}</span>
+                    <button onclick="removeFromCart('${item.name}')">Remove</button>
+                `;
+                cartItemsContainer.appendChild(cartItem);
+            });
+
+            const discountCheckbox = document.getElementById("discount-checkbox");
+            const idNumberField = document.getElementById("id-number-field");
+
+            if (discountCheckbox.checked) {
+                const seniorDiscount = subtotal * 0.20;
+                subtotal -= seniorDiscount;
+                idNumberField.style.display = "block";
+            } else {
+                idNumberField.style.display = "none";
+            }
+
+            if (cart.some(item => item.quantity >= 2)) {
+                subtotal -= 10; // Apply ₱10 discount for buying 2 or more of the same item
+            }
+
+            subtotal -= promoCodeDiscount; // Apply promo code discount if any
+
+            const taxAmount = subtotal * 0.12;
+            const finalTotal = subtotal + taxAmount;
+
+            document.getElementById("total-amount").textContent = `₱${subtotal.toFixed(2)}`;
+            document.getElementById("tax-amount").textContent = `₱${taxAmount.toFixed(2)}`;
+            document.getElementById("final-total").textContent = `₱${finalTotal.toFixed(2)}`;
+        }
+
+        function removeFromCart(name) {
+            cart = cart.filter(item => item.name !== name);
+            updateCartDisplay();
+            document.getElementById("cart-count").innerText = cart.length;
+        }
+
+        function checkout() {
+            const name = document.getElementById("name").value.trim();
+            const address = document.getElementById("address").value.trim();
+            const contact = document.getElementById("contact").value.trim();
+
+            if (!name || !address || !contact) {
+                alert("Please fill in all the required fields.");
+                return;
+            }
+
+            alert(`Thank you for your order, ${name}!\nYour total is ${document.getElementById("final-total").textContent}.\nYour order will be delivered to ${address}.`);
+
+            cart = [];
+            updateCartDisplay();
+            document.getElementById("cart-count").innerText = 0;
+            closeCartModal();
+        }
+
+        function logout() {
+            alert("Logging out...");
+            window.location.href = 'login.html';
+        }
+
+        window.onload = function () {
+            fetchProducts();
+            alert("Welcome! Use promo code 'WELCOME' to get a ₱10 discount on your order.");
+        };
+    </script>
+</body>
+</html>
