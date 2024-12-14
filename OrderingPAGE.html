@@ -331,7 +331,7 @@
         let promoCodeDiscount = 0;
 
         function fetchProducts() {
-            fetch('http://localhost:3001/get-products')
+            fetch('http://localhost:4000/get-products')
                 .then(response => response.json())
                 .then(products => {
                     allProducts = products.reverse();
@@ -351,7 +351,7 @@
                 productDiv.classList.add('menu-item');
                 productDiv.innerHTML = `
                     <div class="item-info">
-                        <img src="http://localhost:3001${product.productImage}" alt="${product.ProductName}" class="item-image" />
+                        <img src="http://localhost:4000${product.productImage}" alt="${product.ProductName}" class="item-image" />
                         <div class="item-text">
                             <h4>${product.ProductName}</h4>
                             <p>₱${product.ProductPrice}</p>
