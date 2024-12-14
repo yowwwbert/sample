@@ -1,0 +1,18 @@
+[
+{"type":"header","version":"5.2.1","comment":"Export to JSON plugin for PHPMyAdmin"},
+{"type":"database","name":"ace"},
+{"type":"table","name":"item","database":"ace","data":
+[
+{"ProductID":"1","ProductName":"Chocolate Cookies","ProductCategory":"Desserts","ProductPrice":"90","ProductQuantity":"10","productImage":"\/uploads\/1734182711428.png"},
+{"ProductID":"2","ProductName":"Coke","ProductCategory":"Drinks","ProductPrice":"65","ProductQuantity":"20","productImage":"\/uploads\/1734182752020.png"},
+{"ProductID":"3","ProductName":"Pineapple Juice","ProductCategory":"Drinks","ProductPrice":"80","ProductQuantity":"50","productImage":"\/uploads\/1734182775749.png"},
+{"ProductID":"4","ProductName":"Ice Cream","ProductCategory":"Desserts","ProductPrice":"100","ProductQuantity":"22","productImage":"\/uploads\/1734182963497.png"},
+{"ProductID":"5","ProductName":"Chicken Wrap","ProductCategory":"Main Course","ProductPrice":"285","ProductQuantity":"250","productImage":"\/uploads\/1734182998971.png"},
+{"ProductID":"6","ProductName":"Beef Steak","ProductCategory":"Main Course","ProductPrice":"315","ProductQuantity":"200","productImage":"\/uploads\/1734183024121.png"},
+{"ProductID":"7","ProductName":"Carbonara","ProductCategory":"Pasta","ProductPrice":"125","ProductQuantity":"20","productImage":"\/uploads\/1734183054690.png"},
+{"ProductID":"8","ProductName":"Caesar Salad","ProductCategory":"Appetizers","ProductPrice":"115","ProductQuantity":"20","productImage":"\/uploads\/1734183073640.png"},
+{"ProductID":"9","ProductName":"Ravioli","ProductCategory":"Pasta","ProductPrice":"105","ProductQuantity":"15","productImage":"\/uploads\/1734183103303.png"},
+{"ProductID":"10","ProductName":"Nachos","ProductCategory":"Appetizers","ProductPrice":"105","ProductQuantity":"25","productImage":"\/uploads\/1734183368319.png"}
+]
+}
+]

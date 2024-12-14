@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Food Ordering System - Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Playpen+Sans:wght@100..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+<style>
+  body {
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url("bg.png");
+  }
+  .header {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start; /* Align items to the left */
+      width: 97.4%;
+      padding: 20px;
+      background-color: #f2944d;
+      color: white;
+      border-bottom: 4px solid #0000000b;
+  }
+  .header img {
+      width: 50px; /* Adjust size as needed */
+      height: 50px; /* Set height to match width for a circle */
+      border-radius: 50%; /* Make the image circular */
+      margin-right: 10px; /* Space between logo and title */
+  }
+  .header-title {
+      flex-grow: 1; /* Allow title to grow and take available space */
+      text-align: center; /* Center the title */
+      font-size: 2em; /* Adjust font size */
+  }
+  .container {
+      width: 90%;
+      max-width: 400px;
+      margin-top: 50px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+  .login-form {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: left; /* Align text to the left */
+  }
+  label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+  }
+  input[type="text"], input[type="password"] {
+      width: calc(100% - 20px);
+      padding: 12px;
+      margin-top: 5px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      transition: border 0.3s;
+  }
+  input[type="text"]:focus, input[type="password"]:focus {
+      border: 1px solid #ff5e57;
+      outline: none;
+  }
+  button {
+      background-color: #ff5e57; 
+      color: white; 
+      border: none; 
+      border-radius: 5px; 
+      padding: 15px; 
+      cursor: pointer; 
+      width: 100%;
+      height: 45px;
+      font-size: 1.1em;
+      transition: background-color 0.3s;
+  }
+  button:hover {
+      background-color: #ff4742; 
+  }
+  hr {
+      border: none;
+      background-color: #ff4742;
+      height: 2px;
+      margin: 20px 0;
+  }
+  h1 {
+      margin-bottom: 20px;
+      font-size: 1.8em;
+      text-align: center;
+  }
+  p {
+      color: red;
+      margin: 10px 0;
+  }
+
+    /* Logout Button */
+  .logout-btn {
+      position: absolute; /* Position at the bottom left */
+      bottom: 20px; /* Distance from the bottom */
+      left: 20px; /* Distance from the left */
+      background-color: #ff5e57; 
+      color: white; 
+      border: none; 
+      border-radius: 5px; 
+      padding: 10px 15px; 
+      cursor: pointer; 
+      font-size: 1em;
+      transition: background-color 0.3s;
+  }
+  .logout-btn:hover {
+      background-color: #ff4742; 
+  }
+  /* Responsive Styles */
+  @media (max-width: 600px) {
+      .header {
+          font-size: 1.5em;
+      }
+      .login-form {
+          padding: 20px;
+      }
+      h1 {
+          font-size: 1.5em;
+      }
+      button {
+          font-size: 1em;
+      }
+  }
+</style>
+</head>
+<body>
+<div class="header">
+  <img src="LOGO.png" alt="Logo"> <!-- Replace with your logo URL -->
+  <div class="header-title">Food Ordering System</div>
+</div>
+
+<div class="container">
+  <div class="login-form" id="loginForm">
+      <h1>LOGIN</h1>
+      <form onsubmit="return validateForm()">
+          <label for="username">Username</label>
+          <input type="text" id="username" required>
+          <label for="password">Password</label>
+          <input type="password" id="password" required>
+          <button type="submit">Login</button>
+          <p id="error-message"></p>
+      </form>
+  </div>
+</div>
+
+<script>
+  function validateForm() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const errorMessage = document.getElementById('error-message');
+
+      errorMessage.textContent = '';
+
+      if (username === 'admin' && password === 'password') {
+          alert('Admin login successful!');
+          window.location.href = 'FinQ2.html'; 
+      } else if (username === 'user' && password === 'password') {
+          alert('User login successful!');
+          window.location.href = 'OrderingPAGE.html';
+      } else {
+          errorMessage.textContent = 'Invalid username or password.';
+          return false;
+      }
+
+      return false; 
+  }
+</script>
+
+</body>
+</html>

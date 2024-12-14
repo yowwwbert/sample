@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product Form</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Playpen+Sans:wght@100..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            background-color: #f7f9fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex; /* Use flexbox for layout */
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #ff5e57;
+            font-size: 2.5em;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px; /* Fixed width for sidebar */
+            background-color: #fff;
+            border-right: 1px solid #ddd;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            height: 100vh; /* Full height */
+            overflow-y: auto; /* Scroll if content overflows */
+        }
+
+        .sidebar h2 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #ff5e57;
+        }
+
+        .product-list {
+            list-style-type: none; /* Remove default list styling */
+            padding: 0;
+        }
+
+        .product-list li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .product-list li:hover {
+            background-color: #f9f9f9; /* Highlight on hover */
+            cursor: pointer;
+        }
+
+        /* Log Out Button Style */
+        .logout-btn {
+            background-color: #ff5e57;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%; /* Full width */
+        }
+
+        .logout-btn:hover {
+            background-color: #ff4742;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0); /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin: 20px;
+            max-width: 600px;
+            flex: 1; /* Allow form to take remaining space */
+        }
+
+        .form-container input,
+        .form-container select,
+        .form-container button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-container input:focus,
+        .form-container select:focus {
+            border-color: #ff5e57;
+            outline: none;
+        }
+
+        .form-container label {
+            font-weight: 500;
+            margin-bottom: 5px;
+            display: block;
+            color: #555;
+        }
+
+        .error-message {
+            color: #ff5722;
+            font-size: 14px;
+        }
+
+        .form-container button {
+            background-color: #ff5e57;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .form-container button:hover {
+            background-color: #ff4742;
+            transform: translateY(-2px);
+        }
+
+        .table-container {
+            margin: 20px auto;
+            max-width: 900px;
+            padding: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        table th,
+        table td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #ff5e57;
+            color: white;
+            font-weight: 600;
+        }
+
+        table td {
+            background-color: #f9f9f9;
+        }
+
+        table tr:nth-child(even) td {
+            background-color: #f2f2f2;
+        }
+
+        table img {
+            border-radius: 5px;
+            transition: transform 0.3s;
+        }
+
+        table img:hover {
+            transform: scale(1.1);
+        }
+
+        .item-image {
+            width: 100px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar for product list -->
+    <div class="sidebar">
+        <h2>Product List</h2>
+        <ul class="product-list" id="productList"></ul>
+        <button class="logout-btn" onclick="logout()">Log Out</button>
+    </div>
+
+    <div class="form-container">
+        <h1>Add New Product</h1>
+        <div id="greetingModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Welcome, Admin!</h2>
+                <p>Thank you for managing the product inventory.</p>
+            </div>
+        </div>
+
+        <form id="productForm" enctype="multipart/form-data">
+            <label for="itemName">Product Name:</label>
+            <input type="text" id="itemName" name="itemName" maxlength="20" required>
+
+            <label for="itemCategory">Product Category:</label>
+            <select id="itemCategory" name="itemCategory" required>
+                <option value="Appetizers">Appetizers</option>
+                <option value="Main Course">Main Course</option>
+                <option value="Pasta">Pasta</option>
+                <option value="Desserts">Desserts</option>
+                <option value="Drinks">Drinks</option>
+            </select>
+
+            <label for="itemPrice">Product Price:</label>
+            <input type="number" id="itemPrice" name="itemPrice" step="0.01" required>
+
+            <label for="itemQuantity">Product Quantity:</label>
+            <input type="number" id="itemQuantity" name="itemQuantity" required>
+
+            <label for="itemImage">Product Image:</label>
+            <input type="file" id="itemImage" name="itemImage" accept="image/*" required>
+
+            <button type="submit">Add Product</button>
+        </form>
+    </div>
+
+    <div class="table-container">
+        <h2>Added Products</h2>
+        <table id="productTable">
+            <thead>
+                <tr>
+                    <th>Product ID</th>
+                    <th>Product Name</th>
+                    <th>Product Category</th>
+                    <th>Product Price</th>
+                    <th>Product Quantity</th>
+                    <th>Product Image</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script>
+        // Fetch and display products when the page loads
+        let maxProductID = 0;
+        
+        function fetchProducts() {
+    fetch('http://localhost:3001/get-products')
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then((data) => {
+            if (data.error) {
+                console.error('Error fetching products:', data.error);
+                return;
+            }
+
+            const productTableBody = document.querySelector('#productTable tbody');
+            const productList = document.querySelector('#productList');
+            productTableBody.innerHTML = ''; // Clear the table before adding new rows
+            productList.innerHTML = ''; // Clear the product list before adding new items
+
+            // Reverse the product list so the newest product is first
+            data.reverse();
+
+            // Dynamically assign new Product IDs
+            data.forEach((product, index) => {
+                product.ProductID = index + 1; // Assign Product IDs starting from 1
+            });
+
+            // Render the updated product list
+            data.forEach((product) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${product.ProductID}</td>
+                    <td>${product.ProductName}</td>
+                    <td>${product.ProductCategory}</td>
+                    <td>${product.ProductPrice}</td>
+                    <td>${product.ProductQuantity}</td>
+                    <td>
+                        <img src="http://localhost:3001${product.productImage}" alt="${product.ProductName}" class="item-image" />
+                    </td>
+                `;
+                productTableBody.appendChild(row);
+
+                // Add product name to the sidebar list
+                const listItem = document.createElement('li');
+                listItem.textContent = product.ProductName;
+                productList.appendChild(listItem);
+            });
+        })
+        .catch((error) => {
+            console.error('Error fetching products:', error);
+            alert('Failed to load products. Please check the server.');
+        });
+}
+
+
+        // Submit event for adding a product
+        document.getElementById('productForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            let itemName = document.getElementById('itemName').value.trim();
+            let itemCategory = document.getElementById('itemCategory').value;
+            let itemPrice = parseFloat(document.getElementById('itemPrice').value);
+            let itemQuantity = parseInt(document.getElementById('itemQuantity').value);
+            let itemImage = document.getElementById('itemImage').files[0];
+
+            // Validation
+            if (!/^[a-zA-Z\s]+$/.test(itemName)) {
+                alert("Product name must contain only alphabets and spaces.");
+                return;
+            }
+
+            if (isNaN(itemPrice) || itemPrice <= 0) {
+                alert("Price must be a positive number.");
+                return;
+            }
+
+            if (isNaN(itemQuantity) || itemQuantity <= 0) {
+                alert("Quantity must be a positive number.");
+                return;
+            }
+
+            // Create FormData to send both data and image
+            const formData = new FormData();
+            formData.append('itemName', itemName);
+            formData.append('itemCategory', itemCategory);
+            formData.append('itemPrice', itemPrice);
+            formData.append('itemQuantity', itemQuantity);
+            formData.append('itemImage', itemImage);
+
+            fetch('http://localhost:3001/add-product', {
+                method: 'POST',
+                body: formData,
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    if (data.error) {
+                        alert(`Error: ${data.error}`);
+                    } else {
+                        alert(data.message); // Success message
+                        document.getElementById('productForm').reset();
+                        fetchProducts(); // Reload the products table
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    alert('Failed to add/update product. Please try again.');
+                });
+        });
+
+        // Fetch products on page load
+        window.onload = function() {
+            fetchProducts();
+            document.getElementById('greetingModal').style.display = 'block'; // Show modal on load
+        };
+
+        // Close modal when the user clicks on <span> (x)
+        document.querySelector('.close').onclick = function() {
+            document.getElementById('greetingModal').style.display = 'none';
+        }
+
+        // Close modal when the user clicks anywhere outside of the modal
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('greetingModal')) {
+                document.getElementById('greetingModal').style.display = 'none';
+            }
+        }
+
+        // Logout function
+        function logout() {
+            // Implement your logout logic here
+            alert("Logging out...");
+            // For example, redirecting to a login page
+            window.location.href = 'login.html'; // Change to your login page
+        }
+    </script>
+
+</body>
+
+</html>
