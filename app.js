@@ -23,7 +23,7 @@ if (!fs.existsSync(uploadsDir)) {
 }
 
 // JSON database file path
-const databasePath = './data/database.json';
+const databasePath = 'database.json';
 
 // Load initial data from JSON
 let database = JSON.parse(fs.readFileSync(databasePath, 'utf8'));
