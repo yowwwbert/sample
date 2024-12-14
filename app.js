@@ -23,10 +23,22 @@ if (!fs.existsSync(uploadsDir)) {
 }
 
 // JSON database file path
-const databasePath = 'database.json';
+const databasePath = './database.json';
 
 // Load initial data from JSON
-let database = JSON.parse(fs.readFileSync(databasePath, 'utf8'));
+let database;
+try {
+    const rawDatabase = JSON.parse(fs.readFileSync(databasePath, 'utf8'));
+    const itemTable = rawDatabase.find((entry) => entry.type === 'table' && entry.name === 'item');
+    if (itemTable && itemTable.data) {
+        database = { item: itemTable.data };
+    } else {
+        throw new Error('Item table not found in JSON');
+    }
+} catch (err) {
+    console.error('Error loading JSON database:', err.message);
+    database = { item: [] }; // Fallback to an empty database
+}
 
 // File upload configuration
 const storage = multer.diskStorage({
@@ -63,6 +75,7 @@ app.post('/add-product', upload.single('itemImage'), (req, res) => {
     } else {
         // Add new product
         database.item.push({
+            ProductID: String(database.item.length + 1), // Auto-increment ID
             ProductName: itemName,
             ProductCategory: itemCategory,
             ProductPrice: parseFloat(itemPrice),
@@ -73,7 +86,7 @@ app.post('/add-product', upload.single('itemImage'), (req, res) => {
     }
 
     // Write the updated database back to the JSON file
-    fs.writeFileSync(databasePath, JSON.stringify(database, null, 2), 'utf8');
+    fs.writeFileSync(databasePath, JSON.stringify([{ type: 'table', name: 'item', data: database.item }], null, 2), 'utf8');
 
     res.status(200).json({ message: 'Product added/updated successfully' });
 });
